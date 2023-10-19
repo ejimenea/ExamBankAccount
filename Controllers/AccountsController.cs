@@ -23,23 +23,9 @@ namespace BankAccount.Controllers
         // GET - Get All Accounts
         [HttpGet]
         [Route("GetallAccounts")]
-        public async Task<ActionResult<List<AccountDTO>>> GetAllAccounts()
+        public async Task<ActionResult<List<AccountResponseDTO>>> GetAllAccounts()
         {
-             var accounts = await bankManager.GetAllAccountAsync();
-            var result = new List<AccountResponseDTO>();
-            foreach (var accountItem in accounts)
-            {
-                result.Add(new AccountResponseDTO
-                {
-                    Id = accountItem.Id,
-                    AccountNumber = accountItem.AccountNumber,
-                    BranchAddress = accountItem.BranchAddress,
-                    AccountType = accountItem.AccountType,  
-                    InitialDeposit = accountItem.InitialDeposit,
-                    CustomerId = accountItem.CustomerId,
-                });
-            }
-
+            var result = await bankManager.GetAllAccountAsync();
             return Ok(result); 
 
         }
@@ -48,24 +34,9 @@ namespace BankAccount.Controllers
         // GET - Get All Accounts by Customer ID
         [HttpGet]
         [Route("GetAccountsByCustomer{custId:int}")]
-        public async Task<IActionResult> GetAccountsByCustomer([FromRoute] int custId)
+        public async Task<ActionResult<List<AccountResponseDTO>>> GetAccountsByCustomer([FromRoute] int custId)
         {
-
-            var accounts = await bankManager.GetAccountByCustomerAsync(custId);
-            var result = new List<AccountResponseDTO>();
-            foreach (var accountItem in accounts)
-            {
-                result.Add(new AccountResponseDTO
-                {
-                    Id = accountItem.Id,
-                    AccountNumber = accountItem.AccountNumber,
-                    BranchAddress = accountItem.BranchAddress,
-                    AccountType = accountItem.AccountType,
-                    InitialDeposit = accountItem.InitialDeposit,
-                    CustomerId = accountItem.CustomerId,
-                });
-            }
-
+            var result = await bankManager.GetAccountByCustomerAsync(custId);
             return Ok(result);
         }
 
@@ -75,7 +46,6 @@ namespace BankAccount.Controllers
         [Route("CreateAccount")]
         public async Task<IActionResult> CreateAccount(AccountDTO req)
         {
-
             Accounts request = new Accounts
             {
                 AccountNumber = req.AccountNumber,
@@ -156,10 +126,11 @@ namespace BankAccount.Controllers
                 return BadRequest();
             }
 
-            AccountResponseDTO response = new AccountResponseDTO
+            AccountUpdateResponseDTO response = new AccountUpdateResponseDTO
             {
                 Id = result.Id,
                 AccountNumber = result.AccountNumber,
+                AccountType = result.AccountType,
                 BranchAddress = result.BranchAddress,
                 InitialDeposit = result.InitialDeposit,
                 CustomerId = result.CustomerId,
@@ -182,10 +153,11 @@ namespace BankAccount.Controllers
                 return BadRequest("");
             }
 
-            AccountResponseDTO response = new AccountResponseDTO
+            AccountUpdateResponseDTO response = new AccountUpdateResponseDTO
             {
                 Id = result.Id,
                 AccountNumber = result.AccountNumber,
+                AccountType = result.AccountType,
                 BranchAddress = result.BranchAddress,
                 CustomerId= result.CustomerId,
             };

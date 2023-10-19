@@ -1,4 +1,5 @@
 ﻿using BankAccount.Model;
+using BankAccount.Model.response;
 
 namespace BankAccount.Manager
 {
@@ -6,7 +7,7 @@ namespace BankAccount.Manager
     {
         //ACOUNT METHODS
 
-        Task<IEnumerable<Accounts>> GetAllAccountAsync();
+        Task<IEnumerable<AccountResponseDTO>> GetAllAccountAsync();
 
         Task<Accounts?> IsAccountNumberExistAsync(string accountNumber);
 
@@ -16,7 +17,7 @@ namespace BankAccount.Manager
 
         Task<Accounts> DeleteAccountAsync(string accountNumber);
 
-        Task<IEnumerable<Accounts>> GetAccountByCustomerAsync(int id);
+        Task<IEnumerable<AccountResponseDTO>> GetAccountByCustomerAsync(int id);
 
 
 

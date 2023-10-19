@@ -13,8 +13,8 @@ namespace BankAccount.Validations
         public AccountValidator()
         {
             RuleFor(c => c.AccountType).NotNull().NotEmpty().Must(IsValidAccountType);
-            RuleFor(c => c.BranchAddress).NotNull().NotEmpty();
-            RuleFor(c => c.AccountNumber).NotNull().NotEmpty().MaximumLength(20);
+            RuleFor(c => c.AccountNumber).NotNull().NotEmpty().MaximumLength(12).Matches("^\\d+$").WithMessage("Please enter digits only for AccountNumber up to 12 digits");
+            RuleFor(c => c.BranchAddress).NotNull().NotEmpty().MaximumLength(50);
             RuleFor(c => c.InitialDeposit).NotNull().NotEmpty().LessThanOrEqualTo(BankConstantValues.MaxInitialDeposit).When(c => c.Id.Equals(null) );
         }
 

@@ -1,5 +1,6 @@
 ﻿using BankAccount.DB;
 using BankAccount.Model;
+using BankAccount.Model.response;
 using BankAccount.Utility;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,15 +16,60 @@ namespace BankAccount.Manager
 
         //ACCOUNT METHODS
 
-        public async Task<IEnumerable<Accounts>> GetAllAccountAsync()
+        public async Task<IEnumerable<AccountResponseDTO>> GetAllAccountAsync()
         {
-            return await dBContext.Accounts.ToListAsync();
+
+            var result = await (from a in this.dBContext.Accounts
+                    join c in this.dBContext.Customers
+                    on a.CustomerId equals c.Id
+                    select new AccountResponseDTO()
+                    {
+                        AccountId = a.Id,
+                        AccountNumber = a.AccountNumber,
+                        AccountType = a.AccountType,
+                        BranchAddress = a.BranchAddress,
+                        InitialDeposit = a.InitialDeposit,
+                        CustomerId = a.CustomerId,
+                        FirstName = c.FirstName,
+                        LastName = c.LastName,
+                        MiddleName = c.MiddleName,
+                        FullName = c.FullName,
+                        DOB = (DateTime)c.DOB,
+                        Age = c.Age,
+                        isFilipino = c.isFilipino
+                    }
+            ).ToListAsync();
+
+            return result;
         }
 
 
-        public async Task<IEnumerable<Accounts>> GetAccountByCustomerAsync(int id)
+        public async Task<IEnumerable<AccountResponseDTO>> GetAccountByCustomerAsync(int id)
         {
-            return await dBContext.Accounts.Where(a => a.CustomerId == id).ToListAsync();
+
+            var result = await (from a in this.dBContext.Accounts
+                                     join c in this.dBContext.Customers
+                                     on a.CustomerId equals c.Id
+                                     where a.CustomerId == id
+                                     select new AccountResponseDTO()
+                                     {
+                                         AccountId = a.Id,
+                                         AccountNumber = a.AccountNumber,
+                                         AccountType = a.AccountType,
+                                         BranchAddress = a.BranchAddress,
+                                         InitialDeposit = a.InitialDeposit,
+                                         CustomerId = a.CustomerId,
+                                         FirstName = c.FirstName,
+                                         LastName = c.LastName,
+                                         MiddleName = c.MiddleName,
+                                         FullName = c.FullName,
+                                         DOB = (DateTime)c.DOB,
+                                         Age = c.Age,
+                                         isFilipino = c.isFilipino
+                                     }
+            ).ToListAsync();
+
+            return result;
         }
         
 

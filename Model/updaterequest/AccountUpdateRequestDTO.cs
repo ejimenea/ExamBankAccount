@@ -2,7 +2,6 @@
 {
     public class AccountUpdateRequestDTO
     {
-        public int Id { get; set; }
 
         public string AccountNumber { get; set; }
 

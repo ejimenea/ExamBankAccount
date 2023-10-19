@@ -4,8 +4,7 @@ namespace BankAccount.Model.request
 {
     public class AccountDTO
     {
- 
-        public string AccountNumber { get; set; } 
+        public string AccountNumber { get; set; } = "<digits only up to 12 characters>";
 
         public string AccountType { get; set; } 
 
