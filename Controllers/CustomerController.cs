@@ -26,6 +26,7 @@ namespace BankAccount.Controllers
         [Route("GetAllCustomer")]
         public async Task<IActionResult> GetAllCustomer()
         {
+            /*
             var customers = await bankManager.GetAllCustomerAsync();
             var result = new List<CustomerResponseDTO>();
             foreach (var customer in customers)
@@ -42,21 +43,37 @@ namespace BankAccount.Controllers
                     isFilipino = customer.isFilipino
                 });
             }
+            */
 
+            List<CustomerResponseDTO> result = new List<CustomerResponseDTO>
+            {
+                new CustomerResponseDTO { Id = 1,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    MiddleName = "A",
+                    DOB = new DateTime(1990, 1, 1),
+                    Age = 34,
+                    isFilipino = true
+                },
+                new CustomerResponseDTO { Id = 2,
+                    FirstName = "Jane",
+                    LastName = "Smith",
+                    MiddleName = "B",
+                    DOB = new DateTime(1985, 5, 15),
+                    Age = 38,
+                    isFilipino = false
+                }
+            };
             return Ok(result);
 
         }
 
 
         // GET - Create Customer
-        [HttpPost]
+/*        [HttpPost]
         [Route("CreateCustomer")]
         public async Task<IActionResult> CreateCustomer(CustomerDTO req)
         {
-            /*if (!ModelState.IsValid)
-            {
-                return ValidationProblem(ModelState);
-            }*/
 
             Customer request = new Customer
             {
@@ -179,7 +196,7 @@ namespace BankAccount.Controllers
 
             return Ok(response);
         }
-
+        */
 
     }
 }

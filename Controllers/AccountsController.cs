@@ -21,14 +21,14 @@ namespace BankAccount.Controllers
         }
 
         // GET - Get All Accounts
-        [HttpGet]
+        /*[HttpGet]
         [Route("GetallAccounts")]
         public async Task<ActionResult<List<AccountResponseDTO>>> GetAllAccounts()
         {
             var result = await bankManager.GetAllAccountAsync();
             return Ok(result); 
 
-        }
+        }*/
 
 
         // GET - Get All Accounts by Customer ID
@@ -36,13 +36,32 @@ namespace BankAccount.Controllers
         [Route("GetAccountsByCustomer{custId:int}")]
         public async Task<ActionResult<List<AccountResponseDTO>>> GetAccountsByCustomer([FromRoute] int custId)
         {
-            var result = await bankManager.GetAccountByCustomerAsync(custId);
+            //var result = await bankManager.GetAccountByCustomerAsync(custId);
+            //return Ok(result);
+            List<AccountResponseDTO> result = new List<AccountResponseDTO>
+            {
+                new AccountResponseDTO { AccountId = 1,
+                    AccountNumber = "123456789012",
+                    AccountType = "Savings",
+                    BranchAddress = "123 Main St",
+                    InitialDeposit = 1000.00m,
+                    CustomerId = custId,
+                    FirstName = "John",
+                    LastName = "Doe",
+                    MiddleName = "A",
+                    FullName = "John A Doe",
+                    DOB = new DateTime(1990, 1, 1),
+                    Age = 34,
+                    isFilipino = true
+                }
+             };
+
             return Ok(result);
         }
 
 
         // GET - Create Account Per Customer
-        [HttpPost]
+        /*[HttpPost]
         [Route("CreateAccount")]
         public async Task<IActionResult> CreateAccount(AccountDTO req)
         {
@@ -83,10 +102,10 @@ namespace BankAccount.Controllers
                 StatusCode = StatusCodes.Status201Created
             };
 
-        }
+        } */
 
         // PUT - Edit Customer with Customer ID
-        [HttpPut]
+        /*[HttpPut]
         [Route("EditAccount{id:int}")]
         public async Task<IActionResult> EditAccount([FromRoute] int id, AccountUpdateRequestDTO req)
         {
@@ -138,11 +157,11 @@ namespace BankAccount.Controllers
 
             return Ok(response);
 
-        }
+        } */
 
         // DELETE - Delete Account
 
-        [HttpDelete]
+        /*[HttpDelete]
         [Route("DeleteAccount{acctnumber}")]
         public async Task<IActionResult> DeleteCustomer([FromRoute] string acctnumber)
         {
@@ -163,7 +182,7 @@ namespace BankAccount.Controllers
             };
 
             return Ok(response);
-        }
+        } */
 
 
 
